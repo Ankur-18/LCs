@@ -1,23 +1,40 @@
 class Solution {
-
-    // to understadn the concept 
     public int maxFreeTime(int eventTime, int k, int[] startTime, int[] endTime) {
-        int count = startTime.length;
-        int[] prefixSum = new int[count + 1];
-        int maxFree = 0;
+        int n = startTime.length;
+        int [] freeArray = new int[n+1];
+          freeArray[0] = startTime[0];
+          freeArray[n] = eventTime -endTime[n-1];
 
-        for (int i = 0; i < count; i++) {
-            prefixSum[i + 1] = prefixSum[i] + endTime[i] - startTime[i];
-        }
+          for(int i =1 ; i<n;i++)
+          {
+            freeArray[i] = startTime[i] - endTime[i-1];
+            
+          }
 
-        for (int i = k - 1; i < count; i++) {
-            int occupied = prefixSum[i + 1] - prefixSum[i - k + 1];
-            int windowEnd = (i == count - 1) ? eventTime : startTime[i + 1];
-            int windowStart = (i == k - 1) ? 0 : endTime[i - k];
-            int freeTime = windowEnd - windowStart - occupied;
-            maxFree = Math.max(maxFree, freeTime);
-        }
+            int maxSum = 0;
+            int currSum = 0;
+            int i =0;
 
-        return maxFree;
+            for(int j=0;j<freeArray.length;j++)
+            {
+                currSum += freeArray[j];
+
+                while(j-i+1>k+1)
+                {
+                    currSum-= freeArray[i];
+                    i++;
+                }
+
+                maxSum = Math.max(maxSum,currSum);
+            }
+
+            return maxSum;
+
+
+
+        // to debug
+        //         System.out.println(Arrays.toString(freeArray));
+        //   return 0;
+
     }
 }
