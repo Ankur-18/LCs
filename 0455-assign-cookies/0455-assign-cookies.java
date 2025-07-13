@@ -3,8 +3,10 @@ class Solution {
          Arrays.sort(s);
         Arrays.sort(g);
         int match =0;
+        int m = g.length;
+        int n = s.length;
 
-        for(int i = 0,j =0 ; i<g.length && j<s.length ;j++ )
+        for(int i = 0,j =0 ; i<m && j<n ;j++ )
         {
             if(g[i] <= s[j])
             {
